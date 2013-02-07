@@ -13,6 +13,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+.idea/*
+.DS*
 
-.rbenv-version
-.DS_Store
+/config/database.yml
+/Gemfile.lock
