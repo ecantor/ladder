@@ -12,7 +12,7 @@ class Tournament < ActiveRecord::Base
   has_many :game_ranks, :through => :games
 
   validates_presence_of :name, :owner_id
-  validate :maximum_allowed
+  # validate :maximum_allowed
 
   def self.participant(user)
     tournaments = arel_table

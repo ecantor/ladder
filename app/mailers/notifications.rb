@@ -1,5 +1,5 @@
 class Notifications < ActionMailer::Base
-  default from: "ladder@nothing.co.nz"
+  default from: "noreply@espacepingpongladder.com"
 
   def tournament_invitation(invite)
     @invite = invite

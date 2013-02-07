@@ -34,9 +34,9 @@ class ChallengesController < ApplicationController
     if @challenge.defender == current_user
       @challenge.attributes = params.require(:challenge).permit(:response)
       @challenge.respond!
-      redirect_to game_path(@challenge.game)
+      redirect_to root_path
     else
-      redirect_to challenge_path(@challenge)
+      redirect_to root_path
     end
   end
 

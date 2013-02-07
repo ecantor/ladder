@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130202050258) do
+ActiveRecord::Schema.define(:version => 20130207151642) do
 
   create_table "challenges", :force => true do |t|
     t.integer  "tournament_id", :null => false
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130202050258) do
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.integer  "preferred_service_id"
+    t.integer  "rank"
   end
 
   add_index "users", ["preferred_service_id"], :name => "index_users_on_preferred_service_id"

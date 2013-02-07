@@ -46,10 +46,33 @@ class Challenge < ActiveRecord::Base
         game.game_ranks.build(:user => challenger, :position => 1)
         game.save!
         update_attribute(:game, game)
+        winner_rank = defender.rank
+        loser_rank = challenger.rank
+        riser = User.find(challenger.id)
+        riser.rank = winner_rank
+        riser.save
+        diff = loser_rank - winner_rank
+        logger.debug("diff is " + diff.to_s)
+        movers = diff - 1
+        logger.debug("movers is " + movers.to_s)
+        unless movers == 0
+          if movers > 1
+            (1..movers).do |mover|
+              player = User.find_by_rank(winner_rank + mover)
+              player.increment!(:rank)
+          else
+            player = User.find_by_rank(winner_rank + 1)
+            player.increment!(:rank)
+          end
+        end
+        logger.debug("changed challenger rank to " + winner_rank.to_s)
+        dropper = User.find(defender.id)
+        dropper.increment!(:rank)
         Notifications.game_confirmation(challenger, game).deliver
       end
     end
   end
+
 
   private
 
@@ -59,7 +82,7 @@ class Challenge < ActiveRecord::Base
 
   def not_already_challenged
     if self.class.active.defending(defender).where(:tournament_id => tournament_id).length > 0
-      errors.add(:defender, 'already challenged')
+      errors.add(:defender, 'already challenged -- players can only face one challenge at a time')
     end
   end
 end

@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= @challenge.challenger.name %> vs <%= @challenge.defender.name %> <small><%= link_to @challenge.tournament.name, tournament_path(@challenge.tournament) %></small></h1>
+  <h1>Challenge: <%= @challenge.challenger.name %> vs <%= @challenge.defender.name %> <br /><small><%= link_to @challenge.tournament.name, tournament_path(@challenge.tournament) %></small></h1>
 </div>
 
 <% if @challenge.message.present? %>

@@ -4,14 +4,10 @@
 </div>
 
 <ul class="nav nav-pills">
-  <% if @tournament.has_user? current_user %>
     <li><%= link_to "Invite player", new_tournament_invite_path(@tournament), :rel => 'tooltip', :title => "#{@tournament.invites.where(:owner_id => current_user).limit_left} invites left" %></li>
-  <% else %>
-    <li><%= link_to "Join", join_tournament_path(@tournament), :method => :post %></li>
-  <% end %>
 </ul>
 
-<p>There are <%= @pending.count %> games to be processed on <%= time_tag (Time.zone.now + 1.week).beginning_of_week %>.</p>
+<p style="display:none">There are <%= @pending.count %> games to be processed on <%= time_tag (Time.zone.now + 1.week).beginning_of_week %>.</p>
 
 <% if @challenges.any? %>
   <h2>Challenges</h2>
@@ -20,41 +16,41 @@
   <% end %>
 <% end %>
 
-<h2>Ladder</h2>
 <table class="table table-bordered table-condensed">
   <thead>
     <tr>
       <th>Rank</th>
-      <th>Player</th>
-      <th>Rating</th>
-      <th></th>
+      <th>Icon</th>
+      <th>Name</th>
+      <th>Record</th>
     </tr>
   </thead>
   <tbody>
-    <% @rating_ranks.each_with_index do |(_, ratings), index| %>
-      <% ratings.each do |rating| %>
+    <% @players.each do | player| %>
         <tr>
-          <% if rating == ratings.first %>
-            <td rowspan="<%= ratings.length %>"><%= index + 1 %></td>
-          <% end %>
-          <td><%= profile_link_tag rating.user %></td>
-          <td><%= number_with_precision rating.low_rank, :precision => 0 %></td>
+            <td><%=  player.rank %></td>
+          <td><%= gravatar_image_tag player.email, 48, :class => 'img-polaroid' %></td>
+          <td><%= player == current_user ? "You" : (link_to player.name, profile_path(player.id)) %></td>
+          <% @W = player.record[0].to_s %>
+          <% @L = player.record[1].to_s %>
+          <td><%= @W + "W -" + @L + "L"   %></td>
           <td>
-            <% if rating.user != current_user && @tournament.has_user?(current_user) %>
-              <div class="btn-group">
-                <%= link_to new_challenge_path(:defender_id => rating.user, :tournament_id => @tournament), :class => 'btn' do %>Challenge<% end %>
+
+          <% if player != current_user && current_user.rank - player.rank < 4 && current_user.rank - player.rank > 0 %>
+                <div class="btn-group">
+                <%= link_to new_challenge_path(:defender_id => player, :tournament_id => @tournament), :class => 'btn' do %>Challenge<% end %>
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to 'Log a game', new_game_path(:tournament_id => @tournament, :user_id => rating.user) %></li>
+                  <li><%= link_to 'Log a game', new_game_path(:tournament_id => @tournament, :user_id => player) %></li>
                 </ul>
               </div>
-            <% end %>
+        <% end %>
           </td>
+
         </tr>
-      <% end %>
-    <% end %>
+  <% end %>
     <% if @tournament.glicko2_ratings.empty? %>
       <tr colspan="3">
         <td>There are no rated players.</td>

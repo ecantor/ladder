@@ -6,4 +6,5 @@ class ChangeOwnerToNotNullOnGame < ActiveRecord::Migration
   def down
     change_column :games, :owner_id, :integer
   end
+
 end

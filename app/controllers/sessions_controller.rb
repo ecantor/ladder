@@ -10,9 +10,11 @@ class SessionsController < ApplicationController
       reset_session
       redirect_to session_path, :notice => "Sign in via #{@authhash[:provider].humanize} canceled."
     else
-      @user = User.new(:name => @authhash[:name], :email => @authhash[:email])
+      @user = User.new(:name => @authhash[:name], :email => @authhash[:email], :rank=>User.count)
       @service = @user.build_preferred_service(@authhash)
       if @user.save && @service.update_attributes(:user_id => @user.id)
+        # add any user to ESpace tourney
+        Tournament.find(1).glicko2_ratings.with_defaults.create(:user => @user)
         authenticate_and_redirect(@user, @service)
       else
         redirect_to session_path, :notice => "Unknown account creation error"
