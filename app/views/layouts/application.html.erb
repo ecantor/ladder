@@ -16,7 +16,9 @@
   </head>
   <body>
 
-    <div class="navbar navbar-fixed-top">
+
+
+       <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -88,6 +90,27 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
+
+       <script type=text/javascript>
+
+           $(function() {
+               $('.dropdown-toggle').bind('click', function() {
+                   logoutShow();
+               });
+
+    //           $('.dropdown-toggle').bind('mouseout', function() {
+    //               logoutHide();
+    //           });
+           });
+
+           function logoutShow() {
+               $('.dropdown-menu').show();
+           }
+
+           function logoutHide() {
+               $('.dropdown-menu').hide();
+           }
+       </script>
 
   </body>
 </html>
