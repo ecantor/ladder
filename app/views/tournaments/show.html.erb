@@ -33,7 +33,7 @@
           <td><%= player == current_user ? "You" : (link_to player.name, profile_path(player.id)) %></td>
           <% @W = player.record[0].to_s %>
           <% @L = player.record[1].to_s %>
-          <td><%= @W + "W -" + @L + "L"   %></td>
+          <td><%= @W + "W - " + @L + "L"   %></td>
           <td>
 
           <% if player != current_user && current_user.rank - player.rank < 4 && current_user.rank - player.rank > 0 %>
