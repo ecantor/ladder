@@ -15,6 +15,6 @@
 /tmp
 .idea/*
 .DS*
-
+.idea/workspace.xml
 /config/database.yml
 /Gemfile.lock
