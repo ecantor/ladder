@@ -1,3 +1,8 @@
-You have been invited to <%= @tournament.name %>
+You have been invited to <%= @tournament.name %>  by <%=  @inviter.name %>!
+
+A ladder is an ongoing tournament in which you play matches at your own convenience over a period of time to find out
+who is the best.  You challenge players ranked up to three slots above you and if you win, you take their spot.
+
+Can you climb the ladder to be the best in ESpace?
 
 To join the tournament, follow the link: <%= tournament_invite_url(@tournament, @invite) %>

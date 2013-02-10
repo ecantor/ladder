@@ -4,7 +4,8 @@ class Notifications < ActionMailer::Base
   def tournament_invitation(invite)
     @invite = invite
     @tournament = invite.tournament
-    mail(:to => invite.email, :subject => "You have been invited")
+    @inviter = invite.owner
+    mail(:to => invite.email, :subject => "#{invite.owner.name} has invited you to the ESpace Ping Pong Ladder")
   end
 
   def game_confirmation(user, game)
