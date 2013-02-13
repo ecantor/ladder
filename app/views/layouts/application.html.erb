@@ -32,6 +32,7 @@
               <li class="<%='active' if ['homes'].include? controller_name %>"><%= link_to "Home", root_path %></li>
               <li class="<%='active' if ['challenges'].include? controller_name %>"><%= link_to challenges_path do %>Challenges <%= defending_count_badge %><% end %></li>
               <li><%= link_to "Invite", new_tournament_invite_path(1) %></li>
+              <li><%= link_to "Request Features & Report Bugs", 'mailto:e@ecantor.com' %></li>
             </ul>
             <ul class="nav pull-right">
               <% if user_logged_in? %>
