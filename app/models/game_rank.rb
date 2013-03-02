@@ -21,4 +21,12 @@ class GameRank < ActiveRecord::Base
   def confirmed?
     confirmed_at != nil
   end
+
+  def opponent(user_id)
+    Game.find(self.game_id).game_ranks.where("user_id != ?", user_id).last.user
+  end
+
+  def opponent_id(user_id)
+    Game.find(self.game_id).game_ranks.where("user_id != ?", user_id).last.user_id
+  end
 end

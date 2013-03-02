@@ -46,4 +46,8 @@ class Game < ActiveRecord::Base
   def versus
     game_ranks.map {|game_rank| game_rank.user.name}.join(' vs ')
   end
+
+  def opponent(user_id)
+    self.game_ranks.where("user_id != ?", user_id).last.user
+  end
 end
