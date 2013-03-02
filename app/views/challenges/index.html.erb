@@ -2,8 +2,9 @@
   <h1>Challenges</h1>
 </div>
 
+
 <% if @defending.any? %>
-  <h2>Defending</h2>
+  <h2>You Defending</h2>
   <ul>
     <% @defending.each do |challenge| %>
       <li><%= link_to challenge_path(challenge) do %><%= gravatar_image_tag challenge.challenger.email %> <%= challenge.challenger.name %> on <%= challenge.tournament.name %><% end %></li>
@@ -12,10 +13,19 @@
 <% end %>
 
 <% if @challenging.any? %>
-  <h2>Challenging</h2>
+  <h2>You Challenging</h2>
   <ul>
     <% @challenging.each do |challenge| %>
       <li><%= link_to challenge_path(challenge) do %><%= gravatar_image_tag challenge.defender.email %> <%= challenge.defender.name %> on <%= challenge.tournament.name %><% end %></li>
     <% end %>
   </ul>
+<% end %>
+
+<% if @all.any? %>
+    <h2>All User Challenges</h2>
+    <ul>
+      <% @all.each do |challenge| %>
+          <li><%= link_to challenge_path(challenge) do %><%= gravatar_image_tag challenge.challenger.email %> <%= challenge.challenger.name %> on <%= challenge.tournament.name %><% end %></li>
+      <% end %>
+    </ul>
 <% end %>
