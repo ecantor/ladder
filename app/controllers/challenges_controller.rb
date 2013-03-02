@@ -3,6 +3,7 @@ class ChallengesController < ApplicationController
   before_filter :find_tournament_and_defender, :only => [:new, :create]
 
   def index
+    @all = Challenge.all
     @challenging = Challenge.active.challenging(current_user.id)
     @defending = Challenge.active.defending(current_user.id)
   end

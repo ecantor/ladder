@@ -6,7 +6,7 @@ class Challenge < ActiveRecord::Base
 
   before_validation :generate_expires_at
 
-  validate :not_already_challenged
+  # validate :not_already_challenged
 
   attr_accessor :response
 
@@ -57,9 +57,10 @@ class Challenge < ActiveRecord::Base
         logger.debug("movers is " + movers.to_s)
         unless movers == 0
           if movers > 1
-            (1..movers).do | mover|
+            (1..movers).each do | mover|
               player = User.find_by_rank(winner_rank + mover)
               player.increment!(:rank)
+              end
           else
             player = User.find_by_rank(winner_rank + 1)
             player.increment!(:rank)

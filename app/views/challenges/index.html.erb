@@ -21,8 +21,8 @@
   </ul>
 <% end %>
 
-<% if @all.any? %>
-    <h2>All User Challenges</h2>
+<% if @all.length > 0 %>
+    <h2>All User Challenges (<%= @all.length %>)</h2>
     <ul>
       <% @all.each do |challenge| %>
           <li><%= link_to challenge_path(challenge) do %><%= gravatar_image_tag challenge.challenger.email %> <%= challenge.challenger.name %> on <%= challenge.tournament.name %><% end %></li>
