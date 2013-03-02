@@ -57,7 +57,7 @@ class Challenge < ActiveRecord::Base
         logger.debug("movers is " + movers.to_s)
         unless movers == 0
           if movers > 1
-            (1..movers).do |mover|
+            (1..movers).do | mover|
               player = User.find_by_rank(winner_rank + mover)
               player.increment!(:rank)
           else
