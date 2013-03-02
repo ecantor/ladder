@@ -28,7 +28,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.with_participant(current_user).find(params[:id])
+    @game = Game.find(params[:id])
     @tournament = @game.tournament
     @game_ranks = @game.game_ranks.includes(:user)
   end
