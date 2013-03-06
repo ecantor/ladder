@@ -12,7 +12,7 @@
 <% if @challenges.any? %>
   <h2>Challenges</h2>
   <% @challenges.each do |challenge| %>
-    <p><%= link_to "#{challenge.challenger.name} vs #{challenge.defender.name}", challenge_path(challenge) %>, expires in <%= distance_of_time_in_words challenge.processed_at , Time.zone.now %></p>
+    <p><%= link_to "#{challenge.challenger.name} [#{challenge.challenger.rank}] vs #{challenge.defender.name} [#{challenge.defender.rank}]", challenge_path(challenge) %>, expires in <%= distance_of_time_in_words challenge.processed_at , Time.zone.now %></p>
   <% end %>
 <% end %>
 
