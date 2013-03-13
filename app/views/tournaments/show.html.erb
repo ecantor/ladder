@@ -3,19 +3,33 @@
   <h1><%= @tournament.name %></h1>
 </div>
 
-<ul class="nav nav-pills">
-    <li><%= link_to "Invite player", new_tournament_invite_path(@tournament), :rel => 'tooltip', :title => "#{@tournament.invites.where(:owner_id => current_user).limit_left} invites left" %></li>
-</ul>
+
 
 <p style="display:none">There are <%= @pending.count %> games to be processed on <%= time_tag (Time.zone.now + 1.week).beginning_of_week %>.</p>
 
-<% if @challenges.any? %>
-  <h2>Challenges</h2>
-  <% @challenges.each do |challenge| %>
-    <p><%= link_to "#{challenge.challenger.name} [#{challenge.challenger.rank}] vs #{challenge.defender.name} [#{challenge.defender.rank}]", challenge_path(challenge) %>, expires in <%= distance_of_time_in_words challenge.processed_at , Time.zone.now %></p>
-  <% end %>
-<% end %>
+<div class="row-fluid" >
 
+  <div class="span6">
+    <h2>Recent Games</h2>
+    <% @games.each do |game| %>
+        <p><%= link_to "#{game.winner.name} beat #{game.loser.name}", game_path(game) %></p>
+    <% end %>
+
+  </div>
+
+  <div class="span6"  >
+
+    <% if @challenges.any? %>
+        <h2>Open Challenges</h2>
+        <% @challenges.each do |challenge| %>
+            <p><%= link_to "#{challenge.challenger.name} [#{challenge.challenger.rank}] vs #{challenge.defender.name} [#{challenge.defender.rank}]", challenge_path(challenge) %>, expires in <%= distance_of_time_in_words challenge.processed_at , Time.zone.now %></p>
+        <% end %>
+    <% end %>
+
+  </div>
+</div>
+
+<h2>Ladder Rankings</h2>
 <table class="table table-bordered table-condensed">
   <thead>
     <tr>
@@ -51,10 +65,10 @@
 
         </tr>
   <% end %>
-    <% if @tournament.glicko2_ratings.empty? %>
-      <tr colspan="3">
-        <td>There are no rated players.</td>
-      </tr>
-    <% end %>
+
   </tbody>
 </table>
+
+<ul class="nav nav-pills">
+  <li><%= link_to "Invite New Player", new_tournament_invite_path(@tournament), :rel => 'tooltip', :title => "#{@tournament.invites.where(:owner_id => current_user).limit_left} invites left" %></li>
+</ul>

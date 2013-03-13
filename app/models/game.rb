@@ -50,4 +50,12 @@ class Game < ActiveRecord::Base
   def opponent(user_id)
     self.game_ranks.where("user_id != ?", user_id).last.user
   end
+
+  def winner
+    User.find(self.game_ranks.where(:position => 1).last.user_id)
+  end
+
+  def loser
+    User.find(self.game_ranks.where(:position => 2).last.user_id)
+  end
 end
