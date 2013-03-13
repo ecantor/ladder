@@ -6,7 +6,7 @@ class Challenge < ActiveRecord::Base
 
   before_validation :generate_expires_at
 
-  # validate :not_already_challenged
+  validate :not_already_challenged
 
   attr_accessor :response
 
