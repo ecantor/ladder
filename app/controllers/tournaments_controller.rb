@@ -24,7 +24,7 @@ class TournamentsController < ApplicationController
     @players = @tournament.users.order(:rank)
     @pending = @tournament.games.where('games.confirmed_at >= ?', Time.zone.now.beginning_of_week)
     @challenges = @tournament.challenges.active
-    @games = Game.last(5)
+    @games = Game.order("created_at desc").last(8)
     # should load the records here
   end
 
