@@ -5,14 +5,14 @@ class Notifications < ActionMailer::Base
     @invite = invite
     @tournament = invite.tournament
     @inviter = invite.owner
-    mail(:to => invite.email, :subject => "#{invite.owner.name} has invited you to the ESpace Ping Pong Ladder")
+    mail(:to => invite.email, :subject => "ESpace: #{invite.owner.name} has invited you to the ESpace Ping Pong Ladder")
   end
 
   def game_confirmation(user, game)
     @user = user
     @game = game
     @tournament = @game.tournament
-    mail(:to => @user.email, :subject => "Confirm game")
+    mail(:to => @user.email, :subject => "ESpace: Confirm the game")
   end
 
   def challenged(challenge)
@@ -20,6 +20,12 @@ class Notifications < ActionMailer::Base
     @defender = challenge.defender
     @challenger = challenge.challenger
     @tournament = challenge.tournament
-    mail(:to => @defender.email, :subject => "You have been challenged")
+    mail(:to => @defender.email, :subject => "ESpace: You've' been challenged by #{challenge.challenger.name} -- put up or shut up!")
   end
+
+  def challenge_reminder(challenge)
+    @challenge = challenge
+    mail(:to => @challenge.defender.email, :subject => "ESpace: Ladder Challenge reminder from #{challenge.challenger.name} -- get your game on!")
+  end
+
 end

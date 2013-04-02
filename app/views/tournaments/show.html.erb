@@ -22,7 +22,7 @@
     <% if @challenges.any? %>
         <h2>Open Challenges</h2>
         <% @challenges.each do |challenge| %>
-            <p><%= link_to "#{challenge.challenger.name} [#{challenge.challenger.rank}] vs #{challenge.defender.name} [#{challenge.defender.rank}]", challenge_path(challenge) %>, expires in <%= distance_of_time_in_words challenge.processed_at , Time.zone.now %></p>
+            <p><%= link_to "#{challenge.challenger.name} [#{challenge.challenger.rank}] vs #{challenge.defender.name} [#{challenge.defender.rank}]", challenge_path(challenge) %> (from <%= challenge.created_at.to_time.strftime('%b %e') %>, expires in <%= distance_of_time_in_words challenge.processed_at, Time.zone.now %>)</p>
         <% end %>
     <% end %>
 
@@ -38,6 +38,7 @@
       <th>Icon</th>
       <th>Name</th>
       <th>Record</th>
+      <th>Streak</th>
     </tr>
   </thead>
   <tbody>
@@ -45,10 +46,11 @@
         <tr>
             <td><%=  player.rank %></td>
           <td><%= gravatar_image_tag player.email, 48, :class => 'img-polaroid' %></td>
-          <td><%= player == current_user ? "You" : (link_to player.name, profile_path(player.id)) %></td>
+          <td><%= player == current_user ? (link_to "You", profile_path(player.id)) : (link_to player.name, profile_path(player.id)) %></td>
           <% @W = player.record[0].to_s %>
           <% @L = player.record[1].to_s %>
-          <td><%= @W + "W - " + @L + "L"   %></td>
+          <td><%= @W + " Wins, " + @L + " Losses"   %></td>
+          <td><%=  player.streak %></td>
           <td>
 
           <% if player != current_user && current_user.rank - player.rank < 4 && current_user.rank - player.rank > 0 %>

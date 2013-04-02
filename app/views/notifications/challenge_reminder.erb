@@ -1,11 +1,13 @@
-<%= @challenger.name %> has challenged you on <%= @tournament.name %><% if @challenge.message.present? %>:
+Just another reminder:
 
-===
-<%= @challenge.message %>
-===
+<%= @challenge.challenger.name %> has challenged you <% if @challenge.message.present? %>:
+
+    ===
+    <%= @challenge.message %>
+    ===
 <% else %>.<% end %>
 
-You need to play a match with <%= @challenger.name %>.  We suggest the following rules:
+You need to play a match with <%= @challenge.challenger.name %>.  We suggest the following rules:
 
 -play games to 21
 -first to win 2 games wins the match
@@ -13,11 +15,9 @@ You need to play a match with <%= @challenger.name %>.  We suggest the following
 -at game point, when one player has 20, the player who is losing gets to serve until the match is over or tied at 20
 -have fun at all times
 
-Failure to respond within 7 days will result in losing by default.
-
+This challenge is going to expire at <%=  @challenge.processed_at %>
 Once you have played your game, follow the link to log your response:
 
-<%= @challenger.name %> on <%= @tournament.name %>
 <%= challenge_url @challenge %>
 
 

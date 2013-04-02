@@ -23,8 +23,8 @@ class TournamentsController < ApplicationController
     @glicko2_ratings = @tournament.glicko2_ratings.includes(:user).by_rank
     @players = @tournament.users.order(:rank)
     @pending = @tournament.games.where('games.confirmed_at >= ?', Time.zone.now.beginning_of_week)
-    @challenges = @tournament.challenges.active
-    @games = Game.order("created_at desc").last(8)
+    @challenges = @tournament.challenges.active.order("created_at desc")
+    @games = Game.order("created_at desc").limit(8)
     # should load the records here
   end
 
@@ -38,5 +38,7 @@ class TournamentsController < ApplicationController
   def find_tournament
     @tournament = Tournament.find(1)
   end
+
+
 
 end

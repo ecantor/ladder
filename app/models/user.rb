@@ -16,4 +16,18 @@ class User < ActiveRecord::Base
   def record
     [self.wins, self.losses]
   end
+
+  def streak
+    games=self.game_ranks.pluck(:position)
+    games[0] == 1 ? outcome = "W" : outcome = "L"
+    streak=1
+    (1..games.length).each do |number|
+      if games[number - 1] == games[number]
+        streak+=1
+      else
+        return outcome + streak.to_s
+      end
+    end
+    return outcome + streak.to_s
+  end
 end
